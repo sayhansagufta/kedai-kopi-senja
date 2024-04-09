@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Kopi Kita - Kopi Sejuta Umat</title>
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet" />
+
+    <!-- Midtrans -->
+    <script type="text/javascript" src="https://app.stg.midtrans.com/snap/snap.js" data-client-key="SB-Mid-client-qM0G5SzeMChnxzHn"></script>
+
+    <!-- bootstrap icon-->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" />
+
+    <!-- Feather Icons -->
+    <script src="https://unpkg.com/feather-icons"></script>
+
+    <!-- My Style -->
+    <link rel="stylesheet" href="style/style.css" />
+
+    <!-- Alpine JS -->
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.13.8/dist/cdn.min.js"></script>
+
+    <!-- app.js -->
+    <script src="src/app.js" async></script>
+  </head>
+  <body>
+    <!--Navbar Start-->
+    <nav class="navbar" x-data>
+      <a href="#" class="navbar-logo">Kopi<span>Kita</span>.</a>
+
+      <div class="navbar-nav">
+        <a href="#">Home</a>
+        <a href="#about">Tentang Kami</a>
+        <a href="#menu">Menu</a>
+        <a href="#product">Produk</a>
+        <a href="#contact">Kontak</a>
+      </div>
+
+      <div class="navbar-extra">
+        <a href="#" id="search-button"><i data-feather="search"></i></a>
+        <a href="#" id="shopping-cart-button">
+          <i data-feather="shopping-cart"></i>
+          <span class="quantity-badge" x-show="$store.cart.quantity" x-text="$store.cart.quantity"></span>
+        </a>
+        <a href="#" id="hamburger-menu"><i data-feather="menu"></i></a>
+      </div>
+
+      <!-- Search form start -->
+      <div class="search-form">
+        <input type="search" id="search-box" placeholder="Search Here..." />
+        <label for="search-box"><i data-feather="search"></i></label>
+      </div>
+      <!-- Search form end -->
+
+      <!-- Shopping Cart Start-->
+
+      <div class="shopping-cart">
+        <template x-for="(item, index) in $store.cart.items" x-keys="index">
+          <div class="cart-item">
+            <img :src="`img/produk/${item.img}`" :alt="item.name" />
+            <div class="item-detail">
+              <h3 x-text="item.name"></h3>
+              <div class="item-price">
+                <span x-text="rupiah(item.price)"></span> &times;
+                <button id="remove" @click="$store.cart.remove(item.id)">&minus;</button>
+                <span x-text="item.quantity"></span>
+                <button id="add" @click="$store.cart.add(item)">&plus;</button> &equals;
+                <span x-text="rupiah(item.total)"></span>
+              </div>
+            </div>
+          </div>
+        </template>
+        <h4 x-show="!$store.cart.items.length" style="margin-top: 1rem">Ooops...Keranjang Anda Kosong:v</h4>
+        <h4 x-show="$store.cart.items.length" style="margin-top: 1rem">Total: <span x-text="rupiah($store.cart.total)"></span></h4>
+
+        <!-- Checkout Form -->
+
+        <div class="form-container" x-show="$store.cart.items.length">
+          <form action="" id="checkoutForm">
+            <input type="hidden" name="items" x-model="JSON.stringify($store.cart.items)" />
+            <input type="hidden" name="items" x-model="$store.cart.total" />
+            <h5>Customer Detail</h5>
+
+            <label for="name">
+              <span>Name</span>
+              <input type="text" name="name" id="name" />
+            </label>
+
+            <label for="email">
+              <span>Email</span>
+              <input type="email" name="email" id="email" />
+            </label>
+
+            <label for="phone">
+              <span>Phone</span>
+              <input type="number" name="phone" id="phone" autocomplete="off" />
+            </label>
+
+            <button class="checkout-button disabled" type="submit" id="checkout-button" value="checkout">Checkout</button>
+          </form>
+        </div>
+      </div>
+
+      <!-- Shopping Cart Ends-->
+    </nav>
+    <!-- Navbar Ends-->
+
+    <!-- Hero Section Start-->
+    <section class="hero" id="home">
+      <main class="content">
+        <h1>Mari Nikmati Secangkir<span>Kopi</span></h1>
+        <p>Lorem ipsum dolor sit amet adipisicing elit.</p>
+        <a href="#" class="cta"> Beli Sekarang</a>
+      </main>
+    </section>
+    <!-- Hero Section Ends-->
+
+    <!-- About Section Starts -->
+    <section id="about" class="about">
+      <h2><span>Tentang</span> Kami</h2>
+
+      <div class="row">
+        <div class="about-img">
+          <img src="img/tentang-kami.jpg" alt="Tentang Kami" />
+        </div>
+        <div class="content">
+          <h3>Kenapa memilih kopi kami?</h3>
+          <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Totam iste cumque dicta harum amet ut.</p>
+          <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Odit maxime tempore quam quas animi repellat aspernatur illo! Eius, fugiat saepe?</p>
+        </div>
+      </div>
+    </section>
+    <!-- About Section Ends-->
+
+    <!-- Menu Section Start-->
+    <section id="menu" class="menu">
+      <h2><span>Menu</span> Kami</h2>
+      <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolorum assumenda rerum beatae eligendi accusantium</p>
+
+      <div class="row">
+        <div class="menu-card">
+          <img src="img/menu/menu-1.jpg" class="menu-card-img" alt="Es Kopi" />
+          <h3 class="menu-card-title">- Es Kopi -</h3>
+          <p class="menu-card-price"></p>
+        </div>
+        <div class="menu-card">
+          <img src="img/menu/menu-2.jpg" class="menu-card-img" alt="Teh Tarik" />
+          <h3 class="menu-card-title">- Teh Tarik -</h3>
+          <p class="menu-card-price"></p>
+        </div>
+        <div class="menu-card">
+          <img src="img/menu/menu-3.jpg" class="menu-card-img" alt="Mie Rebus" />
+          <h3 class="menu-card-title">- Mie Rebus -</h3>
+          <p class="menu-card-price"></p>
+        </div>
+        <div class="menu-card">
+          <img src="img/menu/menu-4.jpg" class="menu-card-img" alt="Roti Bakar" />
+          <h3 class="menu-card-title">- Roti Bakar -</h3>
+          <p class="menu-card-price"></p>
+        </div>
+        <div class="menu-card">
+          <img src="img/menu/menu-5.jpg" class="menu-card-img" alt="Donat" />
+          <h3 class="menu-card-title">- Donat -</h3>
+          <p class="menu-card-price"></p>
+        </div>
+        <div class="menu-card">
+          <img src="img/menu/menu-6.jpg" class="menu-card-img" alt="Gorengan" />
+          <h3 class="menu-card-title">- Gorengan -</h3>
+          <p class="menu-card-price"></p>
+        </div>
+        <div class="menu-card">
+          <img src="img/menu/menu-7.jpg" class="menu-card-img" alt="Pisang Goreng" />
+          <h3 class="menu-card-title">- Pisang Goreng -</h3>
+          <p class="menu-card-price"></p>
+        </div>
+        <div class="menu-card">
+          <img src="img/menu/menu-8.jpeg" class="menu-card-img" alt="Espresso" />
+          <h3 class="menu-card-title">- Martabak Telur -</h3>
+          <p class="menu-card-price"></p>
+        </div>
+      </div>
+    </section>
+    <!-- Menu Section End-->
+
+    <!-- Product Section Start -->
+    <section id="product" class="product" x-data="product">
+      <h2><span>Produk</span> Kami</h2>
+      <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quod explicabo aspernatur molestias aliquam ipsum nemo?</p>
+
+      <div class="row">
+        <template x-for="(item, index) in items" x-key="index">
+          <div class="product-card">
+            <div class="product-icons">
+              <a href="#" @click.prevent="$store.cart.add(item)"><i class="bi-cart" style="font-size: 1.5rem"></i></a>
+              <a href="#" class="item-detail-button"><i class="bi-eye" style="font-size: 1.5rem"></i></a>
+            </div>
+            <div class="product-image">
+              <img :src="`img/produk/${item.img}`" :alt="item.name" />
+            </div>
+            <div class="product-content">
+              <h3 x-text="item.name"></h3>
+              <div class="product-stars">
+                <i class="bi-star-fill" style="font-size: 1.5rem"></i>
+                <i class="bi-star-fill" style="font-size: 1.5rem"></i>
+                <i class="bi-star-fill" style="font-size: 1.5rem"></i>
+                <i class="bi-star-fill" style="font-size: 1.5rem"></i>
+                <i class="bi-star-half" style="font-size: 1.5rem"></i>
+              </div>
+              <div class="product-price"><span x-text="rupiah(item.price)"></span></div>
+            </div>
+          </div>
+        </template>
+      </div>
+    </section>
+    <!-- Product Section Ends -->
+
+    <!-- contact section start-->
+    <section id="contact" class="contact">
+      <h2><span>Kontak</span> Kami</h2>
+      <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Tempore, quaerat.</p>
+
+      <div class="row">
+        <iframe
+          src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d126748.56211042157!2d107.64315755!3d-6.90344945!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e68e6398252477f%3A0x146a1f93d3e815b2!2sBandung%2C%20Bandung%20City%2C%20West%20Java!5e0!3m2!1sen!2sid!4v1712203807907!5m2!1sen!2sid"
+          allowfullscreen=""
+          loading="lazy"
+          referrerpolicy="no-referrer-when-downgrade"
+          class="map"
+        ></iframe>
+
+        <form action="">
+          <div class="input-group">
+            <i data-feather="user"></i>
+            <input type="text" name="" placeholder="nama" id="" />
+          </div>
+          <div class="input-group">
+            <i data-feather="mail"></i>
+            <input type="text" name="" placeholder="email" id="" />
+          </div>
+          <div class="input-group">
+            <i data-feather="phone"></i>
+            <input type="text" name="" placeholder="No Hp" id="" />
+          </div>
+          <button type="submit" class="btn">Kirim Pesan</button>
+        </form>
+      </div>
+    </section>
+    <!-- contact section end-->
+
+    <!-- footer section start -->
+    <footer>
+      <div class="socials">
+        <a href="#"><i data-feather="instagram"></i></a>
+        <a href="#"><i data-feather="github"></i></a>
+        <a href="#"><i data-feather="facebook"></i></a>
+      </div>
+      <div class="links">
+        <a href="#home">Home</a>
+        <a href="#about">About</a>
+        <a href="#menu">Menu</a>
+        <a href="#contact">Contact</a>
+      </div>
+      <div class="credit">
+        <p>Created by <a href="">shayhansagufta</a> . | &copy; 2024.</p>
+      </div>
+    </footer>
+    <!-- Footer section end-->
+
+    <!-- Modal Box Section Start -->
+    <div class="modal" id="item-detail-modal">
+      <div class="modal-container">
+        <a href="#" class="close-icon"><i data-feather="x"></i></a>
+        <div class="modal-content">
+          <img src="img/produk/produk7.jpg" alt="Produk2" />
+          <div class="product-content">
+            <h3>Roti Bakar</h3>
+            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Totam voluptates placeat nulla repellendus perspiciatis repudiandae non consectetur dolor veritatis, temporibus expedita in dolorem veniam a?</p>
+
+            <div class="product-stars">
+              <i data-feather="star"></i>
+              <i data-feather="star" class="star-full"></i>
+              <i data-feather="star" class="star-full"></i>
+              <i data-feather="star" class="star-full"></i>
+              <i data-feather="star" class="star-full"></i>
+            </div>
+            <div class="product-price">Rp 15.200 <span> Rp 25.000</span></div>
+            <a href="#"><i data-feather="shopping-cart"></i><span>add to cart</span></a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Modal Section End-->
+
+    <!-- Feather Icons -->
+    <script>
+      feather.replace();
+    </script>
+
+    <!-- my javascript -->
+    <script src="js/script.js"></script>
+  </body>
+</html>
